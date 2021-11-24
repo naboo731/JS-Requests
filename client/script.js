@@ -197,6 +197,7 @@ queryBtn.addEventListener('click', queryCatcher)
     Based on what we did earlier to display this type of data, write code that will display the response in your HTML document. 
 */
 const foodContainer = document.querySelector("#food-section")
+let foodForm = document.querySelector("#food-list-form")
 
 function clearFood() {
 foodContainer.innerHTML = ``
@@ -212,11 +213,17 @@ const createFood = () => {
     axios.post('http://localhost:3000/food', body)
     .then(response => {
         console.log(response.data)
-    })
+        for (let i = 0; i < response.data.length; i++){
+            let newP = document.createElement("p")
+            newP.textContent = response.data[i]
+            foodForm.appendChild(newP)
+        }
+        })
+
     .catch(error => {
         console.log(error)
     })
     foodInput.value = ''
 }
-let foodForm = document.querySelector("#food-list-form")
+
 foodForm.addEventListener('submit', createFood)
